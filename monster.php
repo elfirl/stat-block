@@ -324,70 +324,43 @@ function stat_block_meta_cha( $post ) { ?>
 
 function stat_block_meta( $post_id, $post ) {
 
-    if ( !isset ( $_POST['stat_block_name_nonce'] ) || !wp_verify_nonce( $_POST['stat_block_name_nonce'], basename( __FILE__ ) ) )
+    $input_fields = array(
+        'stat_block_name',
+        'stat_block_size',
+        'stat_block_type',
+        'stat_block_alignment',
+        'stat_block_ac',
+        'stat_block_hp',
+        'stat_block_speed',
+        'stat_block_str',
+        'stat_block_dex',
+        'stat_block_con',
+        'stat_block_int',
+        'stat_block_wis',
+        'stat_block_cha'
+    );
+
+    foreach ($input_fields as $field) {
+        if ( !isset ( $_POST[ $field . '_nonce'] ) || !wp_verify_nonce( $_POST[ $field. '_nonce'], basename( __FILE__ ) ) )
         return $post_id;
-
-    if ( !isset ( $_POST['stat_block_size_nonce'] ) || !wp_verify_nonce( $_POST['stat_block_size_nonce'], basename( __FILE__ ) ) )
-        return $post_id;
-
-    if ( !isset ( $_POST['stat_block_type_nonce'] ) || !wp_verify_nonce( $_POST['stat_block_type_nonce'], basename( __FILE__ ) ) )
-        return $post_id;
-
-    if ( !isset ( $_POST['stat_block_alignment_nonce'] ) || !wp_verify_nonce( $_POST['stat_block_alignment_nonce'], basename( __FILE__ ) ) )
-        return $post_id;
-
-    if ( !isset ( $_POST['stat_block_ac_nonce'] ) || !wp_verify_nonce( $_POST['stat_block_ac_nonce'], basename( __FILE__ ) ) )
-        return $post_id;
-
-    if ( !isset ( $_POST['stat_block_hp_nonce'] ) || !wp_verify_nonce( $_POST['stat_block_hp_nonce'], basename( __FILE__ ) ) )
-        return $post_id;
-
-    if ( !isset ( $_POST['stat_block_speed_nonce'] ) || !wp_verify_nonce( $_POST['stat_block_speed_nonce'], basename( __FILE__ ) ) )
-        return $post_id;
-
-    if ( !isset ( $_POST['stat_block_str_nonce'] ) || !wp_verify_nonce( $_POST['stat_block_str_nonce'], basename( __FILE__ ) ) )
-        return $post_id;
-
-    if ( !isset ( $_POST['stat_block_dex_nonce'] ) || !wp_verify_nonce( $_POST['stat_block_dex_nonce'], basename( __FILE__ ) ) )
-        return $post_id;
-
-    if ( !isset ( $_POST['stat_block_con_nonce'] ) || !wp_verify_nonce( $_POST['stat_block_con_nonce'], basename( __FILE__ ) ) )
-        return $post_id;
-
-    if ( !isset ( $_POST['stat_block_int_nonce'] ) || !wp_verify_nonce( $_POST['stat_block_int_nonce'], basename( __FILE__ ) ) )
-        return $post_id;
-
-    if ( !isset ( $_POST['stat_block_wis_nonce'] ) || !wp_verify_nonce( $_POST['stat_block_wis_nonce'], basename( __FILE__ ) ) )
-    return $post_id;
-
-    if ( !isset ( $_POST['stat_block_cha_nonce'] ) || !wp_verify_nonce( $_POST['stat_block_cha_nonce'], basename( __FILE__ ) ) )
-    return $post_id;
+    }
 
     $post_type = get_post_type_object( $post->post_type );
 
     if ( !current_user_can( $post_type->cap->edit_post, $post_id ) )
         return $post_id;
 
-    stat_block_sanitize_save_meta( "stat_block_name" );
-    stat_block_sanitize_save_meta( "stat_block_size" );
-    stat_block_sanitize_save_meta( "stat_block_type" );
-    stat_block_sanitize_save_meta( "stat_block_alignment" );
-    stat_block_sanitize_save_meta( "stat_block_ac" );
-    stat_block_sanitize_save_meta( "stat_block_hp" );
-    stat_block_sanitize_save_meta( "stat_block_speed" );
-    stat_block_sanitize_save_meta( "stat_block_str" );
-    stat_block_sanitize_save_meta( "stat_block_dex" );
-    stat_block_sanitize_save_meta( "stat_block_con" );
-    stat_block_sanitize_save_meta( "stat_block_int" );
-    stat_block_sanitize_save_meta( "stat_block_wis" );
-    stat_block_sanitize_save_meta( "stat_block_cha" );
+    foreach ($input_fields as $field) {
+        stat_block_sanitize_save_meta( $field );
+    }
+
 }
 
 function stat_block_sanitize_save_meta( $nonce_field ) {
 
     global $post_id;
 
-    $new_meta_value = ( isset( $_POST[$nonce_field] ) ? sanitize_html_class( $_POST[$nonce_field] ) : '' );
+    $new_meta_value = ( isset( $_POST[$nonce_field] ) ? esc_attr( $_POST[$nonce_field] ) : '' );
 
     $meta_key = $nonce_field;
 
