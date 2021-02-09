@@ -164,11 +164,137 @@ function stat_block_add_post_meta_boxes() {
         'default'
     );
 
+    add_meta_box(
+        'stat-block-creature-saving-throws',
+        esc_html__( 'Saving Throws', 'textdomain'),
+        'stat_block_meta_saving_throws',
+        'statblock',
+        'advanced',
+        'default'
+    );
+
+    add_meta_box(
+        'stat-block-creature-skills',
+        esc_html__( 'Creature Skills', 'textdomain'),
+        'stat_block_meta_skills',
+        'statblock',
+        'advanced',
+        'default'
+    );
+
+    add_meta_box(
+        'stat-block-creature-damage-vulnerabilities',
+        esc_html__( 'Creature Damage Vulnerabilities', 'textdomain'),
+        'stat_block_meta_damage_vulnerabilities',
+        'statblock',
+        'advanced',
+        'default'
+    );
+
+    add_meta_box(
+        'stat-block-creature-damage-resistances',
+        esc_html__( 'Damage Resistances', 'textdomain'),
+        'stat_block_meta_damage_resistances',
+        'statblock',
+        'advanced',
+        'default'
+    );
+
+    add_meta_box(
+        'stat-block-creature-damage-immunities',
+        esc_html__( 'Damage Immunities', 'textdomain'),
+        'stat_block_meta_damage_immunities',
+        'statblock',
+        'advanced',
+        'default'
+    );
+
+    add_meta_box(
+        'stat-block-creature-condition-immunities',
+        esc_html__( 'Condition Immunities', 'textdomain'),
+        'stat_block_meta_condition_immunities',
+        'statblock',
+        'advanced',
+        'default'
+    );
+
+    add_meta_box(
+        'stat-block-creature-senses',
+        esc_html__( 'Creature Senses', 'textdomain'),
+        'stat_block_meta_senses',
+        'statblock',
+        'advanced',
+        'default'
+    );
+
+    add_meta_box(
+        'stat-block-creature-languages',
+        esc_html__( 'Creature Languages', 'textdomain'),
+        'stat_block_meta_languages',
+        'statblock',
+        'advanced',
+        'default'
+    );
+
+    add_meta_box(
+        'stat-block-creature-cr',
+        esc_html__( 'Challenge Rating', 'textdomain'),
+        'stat_block_meta_cr',
+        'statblock',
+        'advanced',
+        'default'
+    );
+
+    add_meta_box(
+        'stat-block-creature-special-traits',
+        esc_html__( 'Special Traits', 'textdomain'),
+        'stat_block_meta_special_traits',
+        'statblock',
+        'advanced',
+        'default'
+    );
+
+    add_meta_box(
+        'stat-block-creature-actions',
+        esc_html__( 'Creature Actions', 'textdomain'),
+        'stat_block_meta_actions',
+        'statblock',
+        'advanced',
+        'default'
+    );
+
+    add_meta_box(
+        'stat-block-creature-reactions',
+        esc_html__( 'Creature Reactions', 'textdomain'),
+        'stat_block_meta_reactions',
+        'statblock',
+        'advanced',
+        'default'
+    );
+
+    add_meta_box(
+        'stat-block-creature-legendary-actions',
+        esc_html__( 'Creature Legendary Actions', 'textdomain'),
+        'stat_block_meta_legendary_actions',
+        'statblock',
+        'advanced',
+        'default'
+    );
+
+    add_meta_box(
+        'stat-block-creature-lair-actions',
+        esc_html__( 'Creature Lair Actions', 'textdomain'),
+        'stat_block_meta_lair_actions',
+        'statblock',
+        'advanced',
+        'default'
+    );
+
 }
 
-function stat_block_meta_name( $post ) { ?>
-
-    <?php wp_nonce_field( basename(__FILE__), 'stat_block_name_nonce' ); ?>
+function stat_block_meta_name( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_name_nonce' ); ?>
 
     <p>
         <label for="stat_block_name"><?php _e( "What is the creature's name?", "textdomain" ); ?></label>
@@ -178,9 +304,9 @@ function stat_block_meta_name( $post ) { ?>
 
 <?php }
 
-function stat_block_meta_size( $post ) { ?>
-
-    <?php wp_nonce_field( basename(__FILE__), 'stat_block_size_nonce' ); ?>
+function stat_block_meta_size( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_size_nonce' ); ?>
 
     <p>
         <label for="stat_block_size"><?php _e( "What is the creature's size?", "textdomain" ); ?></label>
@@ -190,9 +316,9 @@ function stat_block_meta_size( $post ) { ?>
 
 <?php }
 
-function stat_block_meta_type( $post ) { ?>
-
-    <?php wp_nonce_field( basename(__FILE__), 'stat_block_type_nonce' ); ?>
+function stat_block_meta_type( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_type_nonce' ); ?>
 
     <p>
         <label for="stat_block_type"><?php _e( "What is the creature's type?", "textdomain" ); ?></label>
@@ -202,9 +328,9 @@ function stat_block_meta_type( $post ) { ?>
 
 <?php }
 
-function stat_block_meta_alignment( $post ) { ?>
-
-    <?php wp_nonce_field( basename(__FILE__), 'stat_block_alignment_nonce' ); ?>
+function stat_block_meta_alignment( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_alignment_nonce' ); ?>
 
     <p>
         <label for="stat_block_alignment"><?php _e( "What is the creature's alignment?", "textdomain" ); ?></label>
@@ -214,9 +340,9 @@ function stat_block_meta_alignment( $post ) { ?>
 
 <?php }
 
-function stat_block_meta_ac( $post ) { ?>
-
-    <?php wp_nonce_field( basename(__FILE__), 'stat_block_ac_nonce' ); ?>
+function stat_block_meta_ac( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_ac_nonce' ); ?>
 
     <p>
         <label for="stat_block_ac"><?php _e( "What is the creature's armor class?", "textdomain" ); ?></label>
@@ -226,9 +352,9 @@ function stat_block_meta_ac( $post ) { ?>
 
 <?php }
 
-function stat_block_meta_hp( $post ) { ?>
-
-    <?php wp_nonce_field( basename(__FILE__), 'stat_block_hp_nonce' ); ?>
+function stat_block_meta_hp( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_hp_nonce' ); ?>
 
     <p>
         <label for="stat_block_hp"><?php _e( "What is the creature's hit points?", "textdomain" ); ?></label>
@@ -238,9 +364,9 @@ function stat_block_meta_hp( $post ) { ?>
 
 <?php }
 
-function stat_block_meta_speed( $post ) { ?>
-
-    <?php wp_nonce_field( basename(__FILE__), 'stat_block_speed_nonce' ); ?>
+function stat_block_meta_speed( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_speed_nonce' ); ?>
 
     <p>
         <label for="stat_block_speed"><?php _e( "What is the creature's speed?", "textdomain" ); ?></label>
@@ -250,9 +376,9 @@ function stat_block_meta_speed( $post ) { ?>
 
 <?php }
 
-function stat_block_meta_str( $post ) { ?>
-
-    <?php wp_nonce_field( basename(__FILE__), 'stat_block_str_nonce' ); ?>
+function stat_block_meta_str( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_str_nonce' ); ?>
 
     <p>
         <label for="stat_block_str"><?php _e( "What is the creature's strength?", "textdomain" ); ?></label>
@@ -262,9 +388,9 @@ function stat_block_meta_str( $post ) { ?>
 
 <?php }
 
-function stat_block_meta_dex( $post ) { ?>
-
-    <?php wp_nonce_field( basename(__FILE__), 'stat_block_dex_nonce' ); ?>
+function stat_block_meta_dex( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_dex_nonce' ); ?>
 
     <p>
         <label for="stat_block_dex"><?php _e( "What is the creature's dexterity?", "textdomain" ); ?></label>
@@ -274,9 +400,9 @@ function stat_block_meta_dex( $post ) { ?>
 
 <?php }
 
-function stat_block_meta_con( $post ) { ?>
-
-    <?php wp_nonce_field( basename(__FILE__), 'stat_block_con_nonce' ); ?>
+function stat_block_meta_con( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_con_nonce' ); ?>
 
     <p>
         <label for="stat_block_con"><?php _e( "What is the creature's constitution?", "textdomain" ); ?></label>
@@ -286,9 +412,9 @@ function stat_block_meta_con( $post ) { ?>
 
 <?php }
 
-function stat_block_meta_int( $post ) { ?>
-
-    <?php wp_nonce_field( basename(__FILE__), 'stat_block_int_nonce' ); ?>
+function stat_block_meta_int( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_int_nonce' ); ?>
 
     <p>
         <label for="stat_block_int"><?php _e( "What is the creature's intelligence?", "textdomain" ); ?></label>
@@ -298,9 +424,9 @@ function stat_block_meta_int( $post ) { ?>
 
 <?php }
 
-function stat_block_meta_wis( $post ) { ?>
-
-    <?php wp_nonce_field( basename(__FILE__), 'stat_block_wis_nonce' ); ?>
+function stat_block_meta_wis( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_wis_nonce' ); ?>
 
     <p>
         <label for="stat_block_wis"><?php _e( "What is the creature's wisdom?", "textdomain" ); ?></label>
@@ -310,14 +436,182 @@ function stat_block_meta_wis( $post ) { ?>
 
 <?php }
 
-function stat_block_meta_cha( $post ) { ?>
-
-    <?php wp_nonce_field( basename(__FILE__), 'stat_block_cha_nonce' ); ?>
+function stat_block_meta_cha( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_cha_nonce' ); ?>
 
     <p>
         <label for="stat_block_cha"><?php _e( "What is the creature's charisma?", "textdomain" ); ?></label>
         <br />
         <input class="widefat" type="text" name="stat_block_cha" id="stat_block_cha" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_cha', true ) ); ?>" size="30" />
+    </p>
+
+<?php }
+
+function stat_block_meta_saving_throws( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_saving_throws_nonce' ); ?>
+
+    <p>
+        <label for="stat_block_saving_throws"><?php _e( "What are the creature's saving throws?", "textdomain" ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="stat_block_saving_throws" id="stat_block_saving_throws" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_saving_throws', true ) ); ?>" size="30" />
+    </p>
+
+<?php }
+
+function stat_block_meta_skills( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_skills_nonce' ); ?>
+
+    <p>
+        <label for="stat_block_skills"><?php _e( "What are the creature's skills?", "textdomain" ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="stat_block_skills" id="stat_block_skills" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_skills', true ) ); ?>" size="30" />
+    </p>
+
+<?php }
+
+function stat_block_meta_damage_vulnerabilities( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_damage_vulnerabilities_nonce' ); ?>
+
+    <p>
+        <label for="stat_block_damage_vulnerabilities"><?php _e( "What are the creature's damage vulnerabilities?", "textdomain" ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="stat_block_damage_vulnerabilities" id="stat_block_damage_vulnerabilities" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_damage_vulnerabilities', true ) ); ?>" size="30" />
+    </p>
+
+<?php }
+
+function stat_block_meta_damage_resistances( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_damage_resistances_nonce' ); ?>
+
+    <p>
+        <label for="stat_block_damage_resistances"><?php _e( "What are the creature's damage resistances?", "textdomain" ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="stat_block_damage_resistances" id="stat_block_damage_resistances" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_damage_resistances', true ) ); ?>" size="30" />
+    </p>
+
+<?php }
+
+function stat_block_meta_damage_immunities( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_damage_immunities_nonce' ); ?>
+
+    <p>
+        <label for="stat_block_damage_immunities"><?php _e( "What are the creature's damage immunities?", "textdomain" ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="stat_block_damage_immunities" id="stat_block_damage_immunities" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_damage_immunities', true ) ); ?>" size="30" />
+    </p>
+
+<?php }
+
+function stat_block_meta_condition_immunities( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_condition_immunities_nonce' ); ?>
+
+    <p>
+        <label for="stat_block_condition_immunities"><?php _e( "What are the creature's condition immunities?", "textdomain" ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="stat_block_condition_immunities" id="stat_block_condition_immunities" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_condition_immunities', true ) ); ?>" size="30" />
+    </p>
+
+<?php }
+
+function stat_block_meta_senses( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_senses_nonce' ); ?>
+
+    <p>
+        <label for="stat_block_senses"><?php _e( "What are the creature's senses?", "textdomain" ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="stat_block_senses" id="stat_block_senses" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_senses', true ) ); ?>" size="30" />
+    </p>
+
+<?php }
+
+function stat_block_meta_languages( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_languages_nonce' ); ?>
+
+    <p>
+        <label for="stat_block_languages"><?php _e( "What are the creature's languages?", "textdomain" ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="stat_block_languages" id="stat_block_languages" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_languages', true ) ); ?>" size="30" />
+    </p>
+
+<?php }
+
+function stat_block_meta_cr( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_cr_nonce' ); ?>
+
+    <p>
+        <label for="stat_block_cr"><?php _e( "What is the creature's challenge rating?", "textdomain" ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="stat_block_cr" id="stat_block_cr" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_cr', true ) ); ?>" size="30" />
+    </p>
+
+<?php }
+
+function stat_block_meta_special_traits( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_special_traits_nonce' ); ?>
+
+    <p>
+        <label for="stat_block_special_traits"><?php _e( "What are the creature's special traits?", "textdomain" ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="stat_block_special_traits" id="stat_block_special_traits" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_special_traits', true ) ); ?>" size="30" />
+    </p>
+
+<?php }
+
+function stat_block_meta_actions( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_actions_nonce' ); ?>
+
+    <p>
+        <label for="stat_block_actions"><?php _e( "What are the creature's actions?", "textdomain" ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="stat_block_actions" id="stat_block_actions" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_actions', true ) ); ?>" size="30" />
+    </p>
+
+<?php }
+
+function stat_block_meta_reactions( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_reactions_nonce' ); ?>
+
+    <p>
+        <label for="stat_block_reactions"><?php _e( "What are the creature's reactions?", "textdomain" ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="stat_block_reactions" id="stat_block_reactions" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_reactions', true ) ); ?>" size="30" />
+    </p>
+
+<?php }
+
+function stat_block_meta_legendary_actions( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_legendary_actions_nonce' ); ?>
+
+    <p>
+        <label for="stat_block_legendary_actions"><?php _e( "What are the creature's legendary actions?", "textdomain" ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="stat_block_legendary_actions" id="stat_block_legendary_actions" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_legendary_actions', true ) ); ?>" size="30" />
+    </p>
+
+<?php }
+
+function stat_block_meta_lair_actions( $post ) { 
+    
+    wp_nonce_field( basename(__FILE__), 'stat_block_lair_actions_nonce' ); ?>
+
+    <p>
+        <label for="stat_block_lair_actions"><?php _e( "What are the creature's lair actions?", "textdomain" ); ?></label>
+        <br />
+        <input class="widefat" type="text" name="stat_block_lair_actions" id="stat_block_lair_actions" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_lair_actions', true ) ); ?>" size="30" />
     </p>
 
 <?php }
@@ -337,11 +631,25 @@ function stat_block_meta( $post_id, $post ) {
         'stat_block_con',
         'stat_block_int',
         'stat_block_wis',
-        'stat_block_cha'
+        'stat_block_cha',
+        'stat_block_saving_throws',
+        'stat_block_skills',
+        'stat_block_damage_vulnerabilities',
+        'stat_block_damage_resistances',
+        'stat_block_damage_immunities',
+        'stat_block_condition_immunities',
+        'stat_block_senses',
+        'stat_block_languages',
+        'stat_block_cr',
+        'stat_block_special_traits',
+        'stat_block_actions',
+        'stat_block_reactions',
+        'stat_block_legendary_actions',
+        'stat_block_lair_actions'
     );
 
     foreach ($input_fields as $field) {
-        if ( !isset ( $_POST[ $field . '_nonce'] ) || !wp_verify_nonce( $_POST[ $field. '_nonce'], basename( __FILE__ ) ) )
+        if ( !isset ( $_POST[$field . '_nonce'] ) || !wp_verify_nonce( $_POST[$field. '_nonce'], basename( __FILE__ ) ) )
         return $post_id;
     }
 
