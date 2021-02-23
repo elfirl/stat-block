@@ -46,7 +46,7 @@ add_action( 'init', 'stat_block_post_type' );
 
 function custom_enter_title( $input ) {
     if ( 'statblock' == get_post_type() ) {
-        return __( 'Enter the creature\'s name here', 'textdomain' );
+        return __( 'Creature\'s Name', 'textdomain' );
     }
 
     return $input;
@@ -55,79 +55,165 @@ add_filter( 'enter_title_here', 'custom_enter_title' );
 
 // Custom taxonomy for stat blocks
 
-function register_statblock_taxonomy() {
+// Commented code below was for a taxonomy, but I'm going to make it a standard field instead. Keeping this for now, remove later.
+
+// function register_statblock_taxonomy() {
  
-    $labels = array(
-        'name'              => _x( 'Creature Type', 'taxonomy general name', 'textdomain' ),
-        'singular_name'     => _x( 'Creature Type', 'taxonomy singular name', 'textdomain' ),
-        'search_items'      => __( 'Search Creature Types', 'textdomain' ),
-        'all_items'         => __( 'All Creature Types', 'textdomain' ),
-        'view_item'         => __( 'View Creature Types', 'textdomain' ),
-        'parent_item'       => __( 'Parent Creature Type', 'textdomain' ),
-        'parent_item_colon' => __( 'Parent Creature Type:', 'textdomain' ),
-        'edit_item'         => __( 'Edit Creature Type', 'textdomain' ),
-        'update_item'       => __( 'Update Creature Type', 'textdomain' ),
-        'add_new_item'      => __( 'Add New Creature Type', 'textdomain' ),
-        'new_item_name'     => __( 'New Creature Type Name', 'textdomain' ),
-        'not_found'         => __( 'No Creature Types Found', 'textdomain' ),
-        'back_to_items'     => __( 'Back to Creature Types', 'textdomain' ),
-        'menu_name'         => __( 'Creature Type', 'textdomain' ),
-    );
+//     $labels = array(
+//         'name'              => _x( 'Creature Type', 'taxonomy general name', 'textdomain' ),
+//         'singular_name'     => _x( 'Creature Type', 'taxonomy singular name', 'textdomain' ),
+//         'search_items'      => __( 'Search Creature Types', 'textdomain' ),
+//         'all_items'         => __( 'All Creature Types', 'textdomain' ),
+//         'view_item'         => __( 'View Creature Types', 'textdomain' ),
+//         'parent_item'       => __( 'Parent Creature Type', 'textdomain' ),
+//         'parent_item_colon' => __( 'Parent Creature Type:', 'textdomain' ),
+//         'edit_item'         => __( 'Edit Creature Type', 'textdomain' ),
+//         'update_item'       => __( 'Update Creature Type', 'textdomain' ),
+//         'add_new_item'      => __( 'Add New Creature Type', 'textdomain' ),
+//         'new_item_name'     => __( 'New Creature Type Name', 'textdomain' ),
+//         'not_found'         => __( 'No Creature Types Found', 'textdomain' ),
+//         'back_to_items'     => __( 'Back to Creature Types', 'textdomain' ),
+//         'menu_name'         => __( 'Creature Type', 'textdomain' ),
+//     );
  
-    $args = array(
-        'labels'            => $labels,
-        'hierarchical'      => true,
-        'public'            => true,
-        'show_ui'           => true,
-        'show_admin_column' => true,
-        'query_var'         => true,
-        'rewrite'           => array( 'slug' => 'creature-type' ),
-        'show_in_rest'      => true,
-    );
+//     $args = array(
+//         'labels'            => $labels,
+//         'hierarchical'      => true,
+//         'public'            => true,
+//         'show_ui'           => true,
+//         'show_admin_column' => true,
+//         'query_var'         => true,
+//         'rewrite'           => array( 'slug' => 'creature-type' ),
+//         'show_in_rest'      => true,
+//     );
  
  
-    register_taxonomy( 'creature-type', 'statblock', $args );
+//     register_taxonomy( 'creature_type', 'statblock', $args );
  
+// }
+// add_action( 'init', 'register_statblock_taxonomy', 0 );
+
+// Filter Box for Taxonomy
+
+// function filter_post_type_by_taxonomy() {
+// 	global $typenow;
+// 	$post_type = 'statblock'; 
+// 	$taxonomy  = 'creature_type'; 
+// 	if ( $typenow == $post_type ) {
+// 		$selected      = isset( $_GET[$taxonomy] ) ? $_GET[$taxonomy] : '';
+// 		$info_taxonomy = get_taxonomy( $taxonomy );
+// 		wp_dropdown_categories( array(
+// 			'show_option_all' => sprintf( __( 'Show all %s' . 's', 'textdomain' ), $info_taxonomy->label ),
+// 			'taxonomy'        => $taxonomy,
+// 			'name'            => $taxonomy,
+// 			'orderby'         => 'name',
+// 			'selected'        => $selected,
+// 			'show_count'      => true,
+// 			'hide_empty'      => true,
+// 		));
+// 	};
+// }
+
+// add_action( 'restrict_manage_posts', 'filter_post_type_by_taxonomy' );
+
+// // Makes the filter box work
+
+// function convert_taxonomy_id_to_term( $query ) {
+// 	global $pagenow;
+// 	$post_type = 'statblock'; 
+// 	$taxonomy  = 'creature_type'; 
+// 	$q_vars    = &$query->query_vars;
+// 	if ( $pagenow == 'edit.php' && isset( $q_vars['post_type'] ) && $q_vars['post_type'] == $post_type && isset( $q_vars[$taxonomy] ) && is_numeric( $q_vars[$taxonomy] ) && $q_vars[$taxonomy] != 0 ) {
+// 		$term = get_term_by( 'id', $q_vars[$taxonomy], $taxonomy );
+// 		$q_vars[$taxonomy] = $term->slug;
+// 	}
+// }
+
+// add_filter( 'parse_query', 'convert_taxonomy_id_to_term' );
+
+// Add content to Admin Columns
+
+function statblock_table_head( $defaults ) {
+    unset( $defaults['date'] );
+    $defaults['stat_block_type'] = 'Creature Type';
+    $defaults['stat_block_sub_type'] = 'Sub-type / Tag';
+    $defaults['stat_block_cr'] = 'Challenge Rating';
+    $defaults['date'] = 'Date';
+    return $defaults;
 }
-add_action( 'init', 'register_statblock_taxonomy', 0 );
+add_filter('manage_statblock_posts_columns', 'statblock_table_head');
 
-// Filter Taxonomy
+// Add info to Admin Columns
 
-function filter_post_type_by_taxonomy() {
-	global $typenow;
-	$post_type = 'statblock'; // change to your post type
-	$taxonomy  = 'creature-type'; // change to your taxonomy
-	if ( $typenow == $post_type ) {
-		$selected      = isset( $_GET[$taxonomy] ) ? $_GET[$taxonomy] : '';
-		$info_taxonomy = get_taxonomy( $taxonomy );
-		wp_dropdown_categories( array(
-			'show_option_all' => sprintf( __( 'Show all %s' . 's', 'textdomain' ), $info_taxonomy->label ),
-			'taxonomy'        => $taxonomy,
-			'name'            => $taxonomy,
-			'orderby'         => 'name',
-			'selected'        => $selected,
-			'show_count'      => true,
-			'hide_empty'      => true,
-		));
-	};
+function statblock_table_content( $column_name, $post_id ) {
+    if( $column_name == 'stat_block_type' ) {
+        $stat_block_type = get_post_meta( $post_id, 'stat_block_type', true );
+        echo $stat_block_type;
+    }
+
+    if( $column_name == 'stat_block_sub_type' ) {
+        $stat_block_sub_type = get_post_meta( $post_id, 'stat_block_sub_type', true );
+        echo $stat_block_sub_type;
+    }
+
+    if( $column_name == 'stat_block_cr' ) {
+        $stat_block_cr = get_post_meta( $post_id, 'stat_block_cr', true );
+        echo $stat_block_cr;
+    }
 }
+add_action( 'manage_statblock_posts_custom_column', 'statblock_table_content', 10, 2 );
 
-add_action( 'restrict_manage_posts', 'filter_post_type_by_taxonomy' );
+// Specify which Admin Columns are sortable
 
-// Convert taxonomy id to term
+function statblock_table_sorting( $columns ) {
+    $columns['stat_block_type']  = 'stat_block_type';
+    $columns['stat_block_sub_type']  = 'stat_block_sub_type';
+    $columns['stat_block_cr']  = 'stat_block_cr';
 
-function convert_taxonomy_id_to_term( $query ) {
-	global $pagenow;
-	$post_type = 'statblock'; // change to your post type
-	$taxonomy  = 'creature-type'; // change to your taxonomy
-	$q_vars    = &$query->query_vars;
-	if ( $pagenow == 'edit.php' && isset( $q_vars['post_type'] ) && $q_vars['post_type'] == $post_type && isset( $q_vars[$taxonomy] ) && is_numeric( $q_vars[$taxonomy] ) && $q_vars[$taxonomy] != 0 ) {
-		$term = get_term_by( 'id', $q_vars[$taxonomy], $taxonomy );
-		$q_vars[$taxonomy] = $term->slug;
-	}
+    return $columns;
 }
+add_filter( 'manage_edit-statblock_sortable_columns', 'statblock_table_sorting' );
 
-add_filter( 'parse_query', 'convert_taxonomy_id_to_term' );
+// Modifies the sort query for Admin Columns
+
+function statblock_type_column_sort( $vars ) {
+    if( isset( $vars['orderby'] ) && 'stat_block_type' == $vars['orderby'] ) {
+        $vars = array_merge( $vars, array (
+            'meta_key' => 'stat_block_type',
+            'orderby' => 'meta_value'
+        ) );
+    }
+
+    return $vars;
+}
+add_filter( 'request', 'statblock_type_column_sort' );
+
+function statblock_sub_type_column_sort( $vars ) {
+    if( isset( $vars['orderby'] ) && 'stat_block_sub_type' == $vars['orderby'] ) {
+        $vars = array_merge( $vars, array (
+            'meta_key' => 'stat_block_sub_type',
+            'orderby' => 'meta_value'
+        ) );
+    }
+
+    return $vars;
+}
+add_filter( 'request', 'statblock_sub_type_column_sort' );
+
+function statblock_cr_sort( $vars ) {
+    if( isset( $vars['orderby'] ) && 'stat_block_cr' == $vars['orderby'] ) {
+        $vars = array_merge( $vars, array (
+            'meta_key' => 'stat_block_cr',
+            'orderby' => 'meta_value'
+        ) );
+    }
+
+    return $vars;
+}
+add_filter( 'request', 'statblock_cr_sort' );
+
+// Admin page table filtering
+// Todo - use the commented code above to create dropdown filters for type, tag, and cr
 
 // Meta Fields
 
@@ -162,30 +248,40 @@ function creature_stats_meta( $post ) {
     wp_nonce_field( basename(__FILE__), 'creature_stat_block' ); ?>
 
     <div class="stat-block-flex">
-        <div class="stat-block-item">
-            <label for="stat_block_size"><?php _e( "What is the creature's size?", "textdomain" ); ?></label><br />
+        <div class="stat-block-item stat-block-flex-quarter">
+            <label for="stat_block_size"><?php _e( "Size", "textdomain" ); ?></label><br />
             <input type="text" name="stat_block_size" id="stat_block_size" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_size', true ) ); ?>" />
         </div>
-        <div class="stat-block-item">
-            <label for="stat_block_sub_type"><?php _e( "What is the creature's sub type?", "textdomain" ); ?></label><br />
+        <div class="stat-block-item stat-block-flex-quarter">
+            <label for="stat_block_type"><?php _e( "Type", "textdomain" ); ?></label><br />
+            <input type="text" name="stat_block_type" id="stat_block_type" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_type', true ) ); ?>" />
+        </div>
+        <div class="stat-block-item stat-block-flex-quarter">
+            <label for="stat_block_sub_type"><?php _e( "Sub Type / Tag", "textdomain" ); ?></label><br />
             <input type="text" name="stat_block_sub_type" id="stat_block_sub_type" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_sub_type', true ) ); ?>" />
         </div>
-        <div class="stat-block-item">
-            <label for="stat_block_alignment"><?php _e( "What is the creature's alignment?", "textdomain" ); ?></label><br />
+        <div class="stat-block-item stat-block-flex-quarter">
+            <label for="stat_block_alignment"><?php _e( "Alignment", "textdomain" ); ?></label><br />
             <input type="text" name="stat_block_alignment" id="stat_block_alignment" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_alignment', true ) ); ?>" />
         </div>
+    </div>
+    <hr class="stat-block-hr" />
+    <div class="stat-block-flex"> 
         <div class="stat-block-item">
-            <label for="stat_block_ac"><?php _e( "What is the creature's armor class?", "textdomain" ); ?></label><br />
-            <input type="number" name="stat_block_ac" id="stat_block_ac" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_ac', true ) ); ?>" />
+            <label for="stat_block_ac"><?php _e( "Armor Class", "textdomain" ); ?></label><br />
+            <input type="text" name="stat_block_ac" id="stat_block_ac" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_ac', true ) ); ?>" />
         </div>
         <div class="stat-block-item">
-            <label for="stat_block_hp"><?php _e( "What is the creature's hit points?", "textdomain" ); ?></label><br />
+            <label for="stat_block_hp"><?php _e( "Hit Points", "textdomain" ); ?></label><br />
             <input type="text" name="stat_block_hp" id="stat_block_hp" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_hp', true ) ); ?>" />
         </div>
         <div class="stat-block-item">
-            <label for="stat_block_speed"><?php _e( "What is the creature's speed?", "textdomain" ); ?></label><br />
+            <label for="stat_block_speed"><?php _e( "Speed", "textdomain" ); ?></label><br />
             <input type="text" name="stat_block_speed" id="stat_block_speed" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_speed', true ) ); ?>"  />
         </div>
+    </div>
+    <hr class="stat-block-hr" />
+    <div class="stat-block-flex">
         <div class="stat-block-item stat-block-item-attr">
             <label for="stat_block_str"><?php _e( "STR", "textdomain" ); ?></label><br />
             <input type="number" name="stat_block_str" id="stat_block_str" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_str', true ) ); ?>" />
@@ -210,74 +306,83 @@ function creature_stats_meta( $post ) {
             <label for="stat_block_cha"><?php _e( "CHA", "textdomain" ); ?></label><br />
             <input type="number" name="stat_block_cha" id="stat_block_cha" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_cha', true ) ); ?>" />
         </div>
+    </div>
+    <hr class="stat-block-hr" />
+    <div class="stat-block-flex">
         <div class="stat-block-item">
-            <label for="stat_block_saving_throws"><?php _e( "What are the creature's saving throws?", "textdomain" ); ?></label><br />
+            <label for="stat_block_saving_throws"><?php _e( "Saving Throw Proficiencies", "textdomain" ); ?></label><br />
             <input type="text" name="stat_block_saving_throws" id="stat_block_saving_throws" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_saving_throws', true ) ); ?>" />
         </div>
         <div class="stat-block-item">
-            <label for="stat_block_skills"><?php _e( "What are the creature's skills?", "textdomain" ); ?></label><br />
+            <label for="stat_block_skills"><?php _e( "Skills", "textdomain" ); ?></label><br />
             <input type="text" name="stat_block_skills" id="stat_block_skills" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_skills', true ) ); ?>" />
         </div>
         <div class="stat-block-item">
-            <label for="stat_block_damage_vulnerabilities"><?php _e( "What are the creature's damage vulnerabilities?", "textdomain" ); ?></label><br />
+            <label for="stat_block_damage_vulnerabilities"><?php _e( "Damage Vulnerabilities", "textdomain" ); ?></label><br />
             <input type="text" name="stat_block_damage_vulnerabilities" id="stat_block_damage_vulnerabilities" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_damage_vulnerabilities', true ) ); ?>" />
         </div>
         <div class="stat-block-item">
-            <label for="stat_block_damage_resistances"><?php _e( "What are the creature's damage resistances?", "textdomain" ); ?></label><br />
+            <label for="stat_block_damage_resistances"><?php _e( "Damage Resistances", "textdomain" ); ?></label><br />
             <input type="text" name="stat_block_damage_resistances" id="stat_block_damage_resistances" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_damage_resistances', true ) ); ?>" />
         </div>
         <div class="stat-block-item">
-            <label for="stat_block_damage_immunities"><?php _e( "What are the creature's damage immunities?", "textdomain" ); ?></label><br />
+            <label for="stat_block_damage_immunities"><?php _e( "Damage Immunities", "textdomain" ); ?></label><br />
             <input type="text" name="stat_block_damage_immunities" id="stat_block_damage_immunities" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_damage_immunities', true ) ); ?>" />
         </div>
         <div class="stat-block-item">
-            <label for="stat_block_condition_immunities"><?php _e( "What are the creature's condition immunities?", "textdomain" ); ?></label><br />
+            <label for="stat_block_condition_immunities"><?php _e( "Condition Immunities", "textdomain" ); ?></label><br />
             <input type="text" name="stat_block_condition_immunities" id="stat_block_condition_immunities" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_condition_immunities', true ) ); ?>" />
         </div>
         <div class="stat-block-item">
-            <label for="stat_block_senses"><?php _e( "What are the creature's senses?", "textdomain" ); ?></label><br />
+            <label for="stat_block_senses"><?php _e( "Senses", "textdomain" ); ?></label><br />
             <input type="text" name="stat_block_senses" id="stat_block_senses" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_senses', true ) ); ?>" />
         </div>
         <div class="stat-block-item">
-            <label for="stat_block_languages"><?php _e( "What are the creature's languages?", "textdomain" ); ?></label><br />
+            <label for="stat_block_languages"><?php _e( "Languages", "textdomain" ); ?></label><br />
             <input type="text" name="stat_block_languages" id="stat_block_languages" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_languages', true ) ); ?>" />
         </div>
         <div class="stat-block-item">
-            <label for="stat_block_cr"><?php _e( "What is the creature's challenge rating?", "textdomain" ); ?></label><br />
+            <label for="stat_block_cr"><?php _e( "Challenge Rating", "textdomain" ); ?></label><br />
             <input type="text" name="stat_block_cr" id="stat_block_cr" value="<?php echo esc_attr( get_post_meta( $post->ID, 'stat_block_cr', true ) ); ?>" />
         </div>
     </div>
+    <hr class="stat-block-hr" />
     <div class="stat-block-flex-wysiwyg">
         <div class="stat-block-item-wysiwyg">
-            <label for="stat_block_special_traits"><?php _e( "What are the creature's special traits?", "textdomain" ); ?></label><br />
+            <label for="stat_block_special_traits"><?php _e( "Special Traits Description", "textdomain" ); ?></label><br />
             <?php wp_editor( get_post_meta( $post->ID, 'stat_block_special_traits', true ), 'stat_block_special_traits', array( 'textarea_rows' => '10', 'media_buttons' => false, 'quicktags' => false ) ); ?>
         </div>
         <div class="stat-block-item-wysiwyg">
-            <label for="stat_block_actions"><?php _e( "What are the creature's actions?", "textdomain" ); ?></label><br />
+            <label for="stat_block_actions"><?php _e( "Actions Description", "textdomain" ); ?></label><br />
             <?php wp_editor( get_post_meta( $post->ID, 'stat_block_actions', true ), 'stat_block_actions', array( 'textarea_rows' => '10', 'media_buttons' => false, 'quicktags' => false ) ); ?>
         </div>
         <div class="stat-block-item-wysiwyg">
-            <label for="stat_block_reactions"><?php _e( "What are the creature's reactions?", "textdomain" ); ?></label><br />
+            <label for="stat_block_reactions"><?php _e( "Reactions Description", "textdomain" ); ?></label><br />
             <?php wp_editor( get_post_meta( $post->ID, 'stat_block_reactions', true ), 'stat_block_reactions', array( 'textarea_rows' => '10', 'media_buttons' => false, 'quicktags' => false ) ); ?>
         </div>
         <div class="stat-block-item-wysiwyg">
-            <label for="stat_block_lair_actions"><?php _e( "What are the creature's lair actions?", "textdomain" ); ?></label><br />
+            <label for="stat_block_lair_actions"><?php _e( "Lair Actions Description", "textdomain" ); ?></label><br />
             <?php wp_editor( get_post_meta( $post->ID, 'stat_block_lair_actions', true ), 'stat_block_lair_actions', array( 'textarea_rows' => '10', 'media_buttons' => false, 'quicktags' => false ) ); ?>
         </div>
         <div class="stat-block-item-wysiwyg">
-            <label for="stat_block_legendary_actions"><?php _e( "What are the creature's legendary actions?", "textdomain" ); ?></label><br />
+            <label for="stat_block_legendary_actions"><?php _e( "Legendary Actions", "textdomain" ); ?></label><br />
             <?php wp_editor( get_post_meta( $post->ID, 'stat_block_legendary_actions', true ), 'stat_block_legendary_actions', array( 'textarea_rows' => '10', 'media_buttons' => false, 'quicktags' => false ) ); ?>
         </div><div class="stat-block-item-wysiwyg">
-            <label for="stat_block_mythic_actions"><?php _e( "What are the creature's mythic actions?", "textdomain" ); ?></label><br />
+            <label for="stat_block_mythic_actions"><?php _e( "Mythic Actions", "textdomain" ); ?></label><br />
             <?php wp_editor( get_post_meta( $post->ID, 'stat_block_mythic_actions', true ), 'stat_block_mythic_actions', array( 'textarea_rows' => '10', 'media_buttons' => false, 'quicktags' => false ) ); ?>
         </div>
     </div>
 <?php }
 
 function creature_shortcode_box() {
+    // Todo - Figure out the shortcode and params
+    // Todo - Dynamically get the PostID via shortcode param, using get_page_by_path
+    // Todo - Store the shortcode as metadata for the post
+    // Todo - Display the shortcode in the Admin Columns
     ?>
-        <div>This is just a test</div>
+        <div>Eventual output for a creatures shortcode</div>
         <div>[statblock monster="<?php _e( basename( get_permalink() ) ) ?>"]</div>
+        <div>PostID: <?php $this_post = get_page_by_path( 'zombie', '', 'statblock' ); echo $this_post->ID; ?></div>
     <?php
 }
 
@@ -285,6 +390,7 @@ function stat_block_meta( $post_id, $post ) {
 
     $input_fields = array(
         'stat_block_size',
+        'stat_block_type',
         'stat_block_sub_type',
         'stat_block_alignment',
         'stat_block_ac',

@@ -17,30 +17,47 @@
     margin-bottom: 1%;
 }
 
+.stat-block-flex-quarter {
+    flex: 0 24%;
+}
+
 .stat-block-item-attr {
     flex: 0 16%;
-    margin: 2% 4px;
 }
 
 .stat-block-item input {
-    width: 75%;
-    border: none;
+    width: 100%;
     border-radius: 0;
-    border-bottom: 1px solid black;
     margin-top: 5px;
+    padding-left: 3px;
+    padding-right: 0;
 }
 
 .stat-block-item-attr input {
-    width: 30%;
+    width: 100%;
 }
 
 .stat-block-item input:focus {
     box-shadow: none;
     border-color: black;
-    background-color: #eee;
 }
 
 .stat-block-item-wysiwyg {
     flex: 0 49%;
     margin-bottom: 1%;
 }
+
+.stat-block-hr {
+    margin: 2% 0;
+    border-color: #922610;
+}
+
+@media only screen and (max-width: 600px) {
+    .stat-block-flex {
+      display: block;
+    }
+
+    .stat-block-hr {
+        margin: 6% 0;
+    }
+  }
